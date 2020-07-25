@@ -1,0 +1,111 @@
+struct node {
+	int val;
+	node* next;
+};
+struct stack {
+	node* top;
+};
+void init_stack(stack& s) {
+	s.top = NULL;
+}
+node* CreateNode(int x) {
+	node* p = new node();
+	p->val = x;
+	p->next = NULL;
+	return p;
+}
+bool IsEmpty(stack s) {
+	if (s.top == NULL) {
+		return true;
+	}
+	return false;
+}
+bool Push_stack(stack& s, node* p) {
+	if (p == NULL) {
+		return false;
+	}
+	if (IsEmpty(s) == true) {
+		s.top = p;
+	}
+	else {
+		p->next = s.top;
+		s.top = p;
+	}
+	return true;
+}
+bool Pop_stack(stack& s, int& x) {
+	if (IsEmpty(s) == true) {
+		return false;
+	}
+	else {
+		node* p = s.top;
+		x = p->val;
+		s.top = s.top->next;
+		delete p;
+	}
+	return true;
+}
+bool Top_stack(stack& s, int& x) {
+	if (IsEmpty(s) == true)
+	{
+		return false;
+	}
+	x = s.top->val;
+	return true;
+}
+void Display(stack s)
+{
+	std::cout << "STACK: ";
+	node* p = s.top;
+	while (p != NULL)
+	{
+		std::cout << p->val << " ";
+		p = p->next;
+	}
+	std::cout << std::endl;
+}
+int main()
+{
+	stack s;
+	init_stack(s);
+	int x;
+	do {
+		std::cin >> x;
+		if (x == 1)
+		{
+			int n;
+			std::cin >> n;
+			node* p = CreateNode(n);
+			Push_stack(s, p);
+			std::cout << "pushed" << std::endl;
+			Display(s);
+		}
+		else if (x == 2)
+		{
+			int n;
+			if (Pop_stack(s, n) == false) {
+				std::cout << "EMPTY" << std::endl;
+			}
+			else {
+				std::cout << n << std::endl;
+			}
+			Display(s);
+		}
+		else if (x == 3)
+		{
+			int n;
+			if (Top_stack(s, n) == false) {
+				std::cout << "EMPTY" << std::endl;
+			}
+			else {
+				std::cout << n << std::endl;
+			}
+			Display(s);
+		}
+		else if (x == 4) {
+			break;
+		}
+	} while (true);
+
+	return 0;
+}

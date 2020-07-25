@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+void Nhap(int *a, int n)
+{
+    for (int i=0; i<n; i++)
+    {
+        cin>>a[i];
+    }
+}
+int Xet(int *a, int n)
+{
+    int Max = 0;
+    for (int i=0; i<n; i++)
+    {
+        int left = i;
+        int right = i;
+        int CountLeft = 0, CountRight = 0;
+        while (left>0)
+        {
+            left--;
+            if (a[left]>=a[i])
+            {
+                CountLeft++;
+            }
+            else break;
+        }
+        while (right<n-1)
+        {
+            right++;
+            if (a[right]>=a[i])
+            {
+                CountRight++;
+            }
+            else break;
+        }
+        int DT = (CountLeft + CountRight + 1) * 10 * a[i];
+        if (DT>Max)
+        {
+            Max = DT;
+        }
+    }
+    return Max;
+}
+int main()
+{
+    int n;
+    int *a;
+    cin>>n;
+    a = new int[n];
+    Nhap(a, n);
+    cout<<Xet(a, n);
+}

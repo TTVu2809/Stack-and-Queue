@@ -1,0 +1,104 @@
+#include <iostream>
+using namespace std;
+struct node {
+	int val;
+	node* next;
+};
+struct queue {
+	node* head;
+	node* tail;
+};
+void Init_quece(queue& q) {
+	q.head = q.tail = NULL;
+}
+node* CreateNode(int x) {
+	node* p = new node;
+	p->val = x;
+	p->next = NULL;
+	return p;
+}
+bool IsEmpty(queue& q) {
+	if (q.head == NULL) {
+		return true;
+	} return false;
+}
+bool Push(queue& q, node* p) {
+	if (p == NULL) {
+		return false;
+	}
+	if (IsEmpty(q) == true) {
+		q.head = q.tail = p;
+	}
+	else {
+		q.tail->next = p;
+		q.tail = p;
+	}
+	return true;
+}
+bool Pop(queue& q, int& x) {
+	if (IsEmpty(q) == true) {
+		return false;
+	}
+	else {
+		node* p = q.head;
+		x = p->val;
+		q.head = q.head->next;
+		delete p;
+	}
+	return true;
+}
+bool Top(queue& q, int& x) {
+	if (IsEmpty(q) == true) {
+		return false;
+	}
+	x = q.head->val;
+	return true;
+}
+void Display(queue& q) {
+	while (IsEmpty(q) == false) {
+		int x;
+		Pop(q, x);
+		cout << x << " ";
+	}
+}
+int main()
+{
+    queue q;
+    Init_quece(q);
+    int x;
+    do{
+        cin>>x;
+        if (x==1)
+        {
+            int n;
+            cin>>n;
+            node *p=CreateNode(n);
+            Push(q,p);
+        }
+        else if (x==2)
+        {
+            int n;
+            if (Pop(q,n)==false){
+                cout<<"EMPTY"<<endl;
+            }
+            else{
+                cout<<n<<endl;
+            }
+        }
+        else if (x==3)
+        {
+            int n;
+            if (Top(q,n)==false){
+                cout<<"EMPTY"<<endl;
+            }
+            else{
+                cout<<n<<endl;
+            }
+        }
+        else if (x==4){
+            break;
+        }
+    } while (true);
+
+	return 0;
+}

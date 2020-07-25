@@ -1,0 +1,68 @@
+#include<iostream>
+#include<stack>
+#include<string>
+using namespace std;
+bool CHECK(string str, stack<char> a)
+{
+	for (int i = 0; i < str.length(); i++)
+	{
+		if (str[i] == '(' || str[i] == '[' || str[i] == '{')
+		{
+			a.push(str[i]);
+		}
+		else 
+		{
+			if (!a.empty())
+			{
+				if (str[i] == ']')
+				{
+					if (a.top() != '[')
+					{
+						return false;
+					}
+				}
+				if (str[i] == ')')
+				{
+					if (a.top() != '(')
+					{
+						return false;
+					}
+				}
+				if (str[i] == '}')
+				{
+					if (a.top() != '{')
+					{
+						return false;
+					}
+				}
+				a.pop();
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	return a.empty() == true;
+}
+int main()
+{
+	string str;
+	stack<char> a;
+	while (str != "END")
+	{
+		getline(cin, str);
+		if (CHECK(str, a) == true)
+		{
+			cout << "TRUE" << endl;
+		}
+		else if (str == "END") {
+			break;
+		}
+		else
+		{
+			cout << "FALSE" << endl;
+		}
+	}
+	return 0;
+}
